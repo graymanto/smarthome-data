@@ -1,0 +1,4 @@
+node_modules
+timescaledb
+Dockerfile.dev
+__tests__

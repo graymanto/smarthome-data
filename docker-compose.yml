@@ -1,0 +1,53 @@
+version: '3'
+services:
+  smarthomedata:
+    build: .
+    ports:
+      - "8989:8989"
+      - "2003:2003"
+    links:
+      - timescaledb
+    environment:
+      - SHDC_DBUSER
+      - SHDC_DBPASSWORD
+      - SHDC_DBHOST=timescaledb
+  timescaledb:
+    build: ./timescaledb
+    ports:
+      - "5432:5432"
+    environment:
+      - POSTGRES_USER
+      - POSTGRES_PASSWORD
+      - POSTGRES_DB=smarthome_data
+      - SHDC_PGPASSWORD
+      - SHDC_GFPASSWORD
+      - SHDC_GFUSER
+      - SHDC_DBUSER
+      - SHDC_DBPASSWORD
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+  grafana:
+    build:
+      context: ./grafana
+      args:
+        - SHDC_GFPASSWORD
+        - SHDC_GFUSER
+    ports:
+      - "3000:3000"
+    environment:
+      - GF_SECURITY_ADMIN_USER
+      - GF_SECURITY_ADMIN_PASSWORD
+      - GF_INSTALL_PLUGINS=jdbranham-diagram-panel
+      - GF_DATABASE_URL=postgres://${SHDC_GFUSER}:${SHDC_GFPASSWORD}@timescaledb:5432/grafana
+    links:
+      - timescaledb
+    volumes:
+      - grafana-storage:/var/lib/grafana
+      - grafana-config:/etc/grafana
+      - grafana-logs:/var/log/grafana
+    restart: on-failure
+volumes:
+  pgdata:
+  grafana-storage:
+  grafana-config:
+  grafana-logs:

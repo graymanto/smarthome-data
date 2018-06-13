@@ -1,0 +1,6 @@
+apps:
+  - script   : 'src/server.js'
+    name     : 'Data collection daemon http server'
+  - script   : 'src/dbWriter.js'
+    name     : 'Data collection daemon db writer'
+    watch    : false

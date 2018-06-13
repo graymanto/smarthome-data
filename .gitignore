@@ -1,0 +1,5 @@
+node_modules
+yarn-error.log
+easybikedv_apps
+easybikedv_apps.pub
+env.prod.sh

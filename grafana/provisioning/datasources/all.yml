@@ -1,0 +1,23 @@
+apiVersion: 1
+
+deleteDatasources:
+  - name: Graphite
+    orgId: 1
+
+datasources:
+- name: 'Timescaledb'
+  type: 'postgres'
+  access: 'proxy'
+  org_id: 1
+  url: 'timescaledb:5432'
+  user: "USERNAME"
+  is_default: true
+  version: 1
+  editable: true
+  database: "smarthome_data"
+  basicAuth: false
+  jsonData:
+    keepCookies: []
+    sslmode: "disable"
+  secureJsonData:
+    password: "PASSWORD"
