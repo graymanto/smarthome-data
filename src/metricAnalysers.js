@@ -1,4 +1,4 @@
-const indexedMetrics = { templevel: 1 };
+const indexedMetrics = { temperature: 1 };
 
 const metricGroupNames = {
   INVALID: "invalid",
